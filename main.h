@@ -1,38 +1,29 @@
 #ifndef MAIN_H
 #define MAIN_H
-#define BUFSIZE 1024
+
 #include <stdarg.h>
 
 /**
- * struct specifier - contains specifiers for printf
- * @width: width of field to print
- * @precision: precision of field to print
- * @length: modifies type length. h/l flags. 0 default, +1 per l, -1 per h
- * @widthflag: tells whether width is set
- * @precisionflag: tells whether precision is set
- * @left: left justify, '-'. 0 for right, 1 for left
- * @sign: force sign, '+'. 0 for no, 1 for yes
- * @space: space pad left side of positive numbers if leading 0s. 0 no 1 yes
- * @zero: zero pad numbers up to width. 0 for no, 1 for yes.
- * @zerox: add leading 0, 0x, or 0X to o, x or X specifiers. 0 no 1 yes
- * @specifier: the data type to print, c, s, d, x, etc.
+ * struct spec_types - Struct to get function of specifier
+ * @spec: specifier
+ * @f: The function associated
  */
 
-typedef struct specifier
+typedef struct spec_types
 {
-	unsigned int width;
-	unsigned int precision;
-	int length;
-	char widthflag;
-	char precisionflag;
-	char left;
-	char sign;
-	char space;
-	char zero;
-	char zerox;
-	char specifier;
-} specifier;
+	char *spec;
+	char *(*f)();
+} s_types;
 
+char *(*conver_specs(char s))(va_list);
 int _printf(const char *format, ...);
+char *char_find(va_list c);
+char *string_find(va_list s);
+char *percent_find(void);
+char *nothing_found(char c);
+int _strlen(char *s);
+char *chartos(char c);
+void _puts(char *buffer, int size);
+int alloc_buffer(char *hold, int hlen, char *buffer, int size, double *total);
 
 #endif
