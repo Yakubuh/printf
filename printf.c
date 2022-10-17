@@ -30,8 +30,8 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			spec_functions = conver_specs(format[i]);
-			holder = (spec_functions) ? spec_functions(lists) : nothing_found(format[i]);
+			spec_func = conver_specs(format[i]);
+			holder = (spec_func) ? spec_func(lists) : nothing_found(format[i]);
 			if (holder)
 				buffend = alloc_buffer(holder, _strlen(holder), buffer, buffend, total);
 		}
