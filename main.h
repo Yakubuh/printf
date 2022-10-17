@@ -1,6 +1,7 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef PRINTF_H
+#define PRINTF_H
 
+#define BUFSIZE 1024
 #include <stdarg.h>
 
 /**
@@ -24,6 +25,7 @@ char *nothing_found(char c);
 int _strlen(char *s);
 char *chartos(char c);
 void _puts(char *buffer, int size);
+char *_memcpy(char *dest, char *src, unsigned int n, unsigned int bufferlen);
 int alloc_buffer(char *hold, int hlen, char *buffer, int size, double *total);
 
 #endif
