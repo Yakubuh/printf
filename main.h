@@ -28,6 +28,7 @@ void _puts(char *buffer, int size);
 char *_memcpy(char *dest, char *src, unsigned int n, unsigned int bufferlen);
 int alloc_buffer(char *hold, int hlen, char *buffer, int size, double *total);
 
+int _printf(const char *format, ...);
 
 /* print_bases */
 int print_hex(va_list l, flags_t *f);
