@@ -1,47 +1,54 @@
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
 #include <stddef.h>
-#include <stdio.h>
 
 /**
- * _printf - produces output according to a format
- * @format: is a character string
- *
- * Return: the number of characters
+ * _printf - recreates the printf function
+ * @format: string with format specifier
+ * Return: number of characters printed
  */
 
 int _printf(const char *format, ...)
 {
-	int i, buffend = 0;
-	double totalBuffer = 0;
-	double *total;
-	char *holder;
-	char buffer[BUFSIZE];
-	char *(*spec_func)(va_list) = NULL;
-	va_list lists;
-
-	if (!format)
-		return (-1);
-	va_start(lists, format);
-	total = &totalBuffer;
-	for (i = 0; i < BUFSIZE; i++)
-		buffer[i] = 0;
-	for (i = 0; format && format[i]; i++)
+	if (format != NULL)
 	{
-		if (format[i] == '%')
+		int count = 0, i;
+		int (*m)(va_list);
+		va_list args;
+
+		va_start(args, format);
+		i = 0;
+		if (format[0] == '%' && format[1] == '\0')
+			return (-1);
+		while (format != NULL && format[i] != '\0')
 		{
-			i++;
-			spec_func = conver_specs(format[i]);
-			holder = (spec_func) ? spec_func(lists) : nothing_found(format[i]);
-			if (holder)
-				buffend = alloc_buffer(holder, _strlen(holder), buffer, buffend, total);
+			if (format[i] == '%')
+			{
+				if (format[i + 1] == '%')
+				{
+					count += _putchar(format[i]);
+					i += 2;
+				}
+				else
+				{
+					m = get_func(format[i + 1]);
+					if (m)
+						count += m(args);
+					else
+						count = _putchar(format[i]) + _putchar(format[i + 1]);
+					i += 2;
+				}
+			}
+			else
+			{
+				count += _putchar(format[i]);
+				i++;
+			}
 		}
-		else
-		{
-			holder = chartos(format[i]);
-			buffend = alloc_buffer(holder, 1, buffer, buffend, total);
-		}
+		va_end(args);
+		return (count);
 	}
-	_puts(buffer, buffend);
-	va_end(lists);
-	return (totalBuffer + buffend);
+	return (-1);
 }
