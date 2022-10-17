@@ -1,8 +1,55 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include "main.h"
+
+#include <stddef.h>
+
+/**
+ * Madoks
+ * _printf - produces output according to a format
+ * @format: character string
+ *
+ * Return: printed char
+ */
+
+int _printf(const char *format, ...)
+{
+	int i, ibuff = 0;
+	double *printed;
+	double all_ibuff = 0;
+	char buff_size[BUFSIZE];
+	char *container;
+	va_list lists;
+	char *(*spec_func)(va_list) = NULL;
+
+	if (format == NULL)
+		return (-1);
+	va_start(lists, format);
+	printed = &all_ibuff;
+	while (i < BUFSIZE)
+	{
+		buff_size[i] = 0;
+		i++;
+	}
+	for (i = 0; format && format[i]; i++)
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			spec_func = get_spec_func(format[i]);
+			container = (spec_func) ? spec_func(lists) : nothing_found(format[i]);
+			if (container)
+				ibuff = alloc_buffer(container, _strlen(container), buff_size, ibuff, printed);
+		}
+		else
+		{
+			container = chartos(format[i]);
+			ibuff = alloc_buffer(container, 1, buff_size, ibuff, printed);
+		}
+	}
+	_puts(buff_size, ibuff);
+	va_end(lists);
+	return (all_ibuff + ibuff);
+}
 
 /**
  * buffer_const_char - puts constant format chars into buffer
@@ -13,6 +60,7 @@
  *
  * Return: number of chars put into buffer
  */
+/* Yakubu
 int buffer_const_char(char **format, char *buffer, unsigned int *len)
 {
 	int printtotal = 0;
@@ -30,6 +78,7 @@ int buffer_const_char(char **format, char *buffer, unsigned int *len)
 	}
 	return (printtotal);
 }
+*/
 
 /**
  * stringize_arg - Sends va_arg to appropriate function,
@@ -41,6 +90,7 @@ int buffer_const_char(char **format, char *buffer, unsigned int *len)
  *
  * Return: string to add to buffer
  */
+/* Yakubu
 char *stringize_arg(va_list list, specifier spec, unsigned int *freeflag)
 {
 	static char tmpstr[2] = {0, 0};
@@ -142,7 +192,7 @@ char *stringize_arg(va_list list, specifier spec, unsigned int *freeflag)
 	}
 	return (NULL);
 }
-
+*/
 /**
  * get_specifier - gets specifier information
  *
@@ -151,6 +201,7 @@ char *stringize_arg(va_list list, specifier spec, unsigned int *freeflag)
  *
  * Return: specifier struct with info
  */
+/*
 specifier get_specifier(char **format, va_list list)
 {
 	specifier spec;
@@ -254,6 +305,7 @@ specifier get_specifier(char **format, va_list list)
 	}
 	return (spec);
 }
+*/
 
 /**
  * _printf - prints a formatted string with given arguments
@@ -262,6 +314,7 @@ specifier get_specifier(char **format, va_list list)
  *
  * Return: characters printed, or -1 on error
  */
+/*
 int _printf(char *format, ...)
 {
 	char *tmp = 0, *ptr = 0, buffer[1024];
@@ -332,3 +385,4 @@ int _printf(char *format, ...)
 		return (-1);
 	return (printtotal);
 }
+*/

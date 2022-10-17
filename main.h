@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define BUFSIZE 1024
 #include <stdarg.h>
 
 /**
@@ -17,7 +18,9 @@
  * @zerox: add leading 0, 0x, or 0X to o, x or X specifiers. 0 no 1 yes
  * @specifier: the data type to print, c, s, d, x, etc.
  */
-typedef struct specifier
+
+// Yakubu's code
+/*typedef struct specifier
 {
 	unsigned int width;
 	unsigned int precision;
@@ -31,7 +34,7 @@ typedef struct specifier
 	char zerox;
 	char specifier;
 } specifier;
-
+*/
 
 int _printf(const char *format, ...);
 
